@@ -6,7 +6,10 @@ import ProfileCard from "../components/ProfileCard";
 
 export default function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -28,9 +31,13 @@ export default function Dashboard() {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log(res);
         setAuthenticated(res.authenticated);
         if (res.authenticated) {
-          setUsername(res.username);
+          setUsername(res.user.username);
+          setFirstName(res.user.firstName);
+          setLastName(res.user.lastName);
+          setEmail(res.user.email);
         } else {
           navigate("/login");
         }
@@ -51,7 +58,13 @@ export default function Dashboard() {
         height="100vh"
         m={(0, "auto")}
       >
-        <ProfileCard username={username} onClick={handleLogout} />
+        <ProfileCard
+          username={username}
+          firstName={firstName}
+          lastName={lastName}
+          email={email}
+          onClick={handleLogout}
+        />
       </Stack>
     </Container>
   );

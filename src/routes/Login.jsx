@@ -70,7 +70,7 @@ export default function Login() {
         m={(0, "auto")}
       >
         <Typography variant="h6">Login Here</Typography>
-        <Typography>Username: test / Password: test</Typography>
+        <Typography>Username: testing / Password: testing</Typography>
         <TextField
           fullWidth
           type="text"

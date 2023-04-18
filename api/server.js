@@ -62,7 +62,12 @@ app.post("/users", (req, res) => {
 
   if (compare) {
     req.session.authenticated = true;
-    req.session.username = username;
+    req.session.user = {
+      username: reqUser.username,
+      firstName: reqUser.firstName,
+      lastName: reqUser.lastName,
+      email: reqUser.email,
+    };
     res.json(req.session);
   } else {
     res.sendStatus(418);
