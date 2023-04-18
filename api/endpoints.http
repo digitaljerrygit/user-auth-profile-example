@@ -1,0 +1,26 @@
+### GET ALL USERS 
+GET http://localhost:3001/users
+
+### LOGIN
+POST http://localhost:3001/users
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test"
+}
+
+### PRIVATE PAGES
+GET http://localhost:3001/current-user
+
+### LOGOUT 
+DELETE http://localhost:3001/logout
+
+### REGISTER 
+POST http://localhost:3001/signup
+Content-Type: application/json
+
+{
+  "username": "testing",
+  "password": "testing"
+}
