@@ -123,6 +123,14 @@ export default function Signup() {
         <Button type="submit" fullWidth={true} variant="contained">
           Submit
         </Button>
+        <Button
+          type="submit"
+          fullWidth={true}
+          variant="outlined"
+          onClick={() => navigate("/login")}
+        >
+          Log In Instead
+        </Button>
       </Stack>
     </form>
   );

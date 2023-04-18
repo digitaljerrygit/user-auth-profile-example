@@ -20,10 +20,10 @@ app.use(
 let users = [
   {
     username: "testing",
-    password: "testing",
-    firstName: "John",
+    password: "$2b$10$Z9pm7ldKqH/KAMoCpKmxFOHbIorJwSHyDdbz3NbQnkLGxD8KPoM6a",
+    firstName: "Jane",
     lastName: "Doe",
-    email: "john.doe@gmail.com",
+    email: "testing_email@gmail.com",
   },
 ];
 
@@ -34,6 +34,10 @@ app.get("/users", (req, res) => {
 
 // REGISTRATION
 app.post("/signup", async (req, res) => {
+  const userInDb = users.find((user) => user.username === req.body.username);
+  if (userInDb) {
+    return res.sendStatus(404);
+  }
   const password = await bcrypt.hash(req.body.password, 10);
   users.push({
     username: req.body.username,
@@ -53,12 +57,10 @@ app.post("/signup", async (req, res) => {
 });
 
 // LOGIN
-app.post("/users", (req, res) => {
+app.post("/users", async (req, res) => {
   const { username, password } = req.body;
   const reqUser = users.find((user) => user.username === username);
-
-  const reqPassword = String(reqUser.password);
-  const compare = bcrypt.compare(password, reqPassword);
+  const compare = await bcrypt.compare(password, reqUser.password);
 
   if (compare) {
     req.session.authenticated = true;
@@ -73,6 +75,8 @@ app.post("/users", (req, res) => {
     res.sendStatus(418);
   }
 });
+
+// EDIT PROFILE
 
 // CURRENT STATUS
 app.get("/current-user", (req, res) => {

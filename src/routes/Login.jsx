@@ -88,6 +88,16 @@ export default function Login() {
         <Button type="submit" fullWidth={true} variant="contained">
           Submit
         </Button>
+        <Button
+          type="button"
+          fullWidth={true}
+          variant="outlined"
+          onClick={() => {
+            navigate("/signup");
+          }}
+        >
+          Create An Account
+        </Button>
       </Stack>
     </form>
   );
