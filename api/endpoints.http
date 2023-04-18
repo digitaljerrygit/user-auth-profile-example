@@ -6,21 +6,32 @@ POST http://localhost:3001/users
 Content-Type: application/json
 
 {
-  "username": "test",
-  "password": "test"
+  "username": "testing",
+  "password": "testing"
 }
 
 ### PRIVATE PAGES
 GET http://localhost:3001/current-user
 
 ### LOGOUT 
-DELETE http://localhost:3001/logout
+GET http://localhost:3001/logout
 
 ### REGISTER 
 POST http://localhost:3001/signup
 Content-Type: application/json
 
 {
-  "username": "testing",
-  "password": "testing"
+  "username": "example_user",
+  "password": "testing",
+  "firstName": "Charlie",
+  "lastName": "Bravo",
+  "email": "example_email@gmail.com"
+}
+
+### EDIT PROFILE 
+PUT http://localhost:3001/edit-profile
+Content-Type: application/json
+
+{
+  "email": "newemail@gmail.com"
 }

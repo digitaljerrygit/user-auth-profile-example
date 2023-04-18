@@ -4,31 +4,22 @@ const app = express();
 const session = require("express-session");
 const bcrypt = require("bcrypt");
 const morgan = require("morgan");
-
+const users = require("./users");
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false },
   })
 );
 
-let users = [
-  {
-    username: "testing",
-    password: "$2b$10$Z9pm7ldKqH/KAMoCpKmxFOHbIorJwSHyDdbz3NbQnkLGxD8KPoM6a",
-    firstName: "Jane",
-    lastName: "Doe",
-    email: "testing_email@gmail.com",
-  },
-];
-
 // GET ALL USERS
 app.get("/users", (req, res) => {
+  console.log(users);
   res.json(users);
 });
 
@@ -60,23 +51,36 @@ app.post("/signup", async (req, res) => {
 app.post("/users", async (req, res) => {
   const { username, password } = req.body;
   const reqUser = users.find((user) => user.username === username);
-  const compare = await bcrypt.compare(password, reqUser.password);
 
-  if (compare) {
-    req.session.authenticated = true;
-    req.session.user = {
-      username: reqUser.username,
-      firstName: reqUser.firstName,
-      lastName: reqUser.lastName,
-      email: reqUser.email,
-    };
-    res.json(req.session);
-  } else {
-    res.sendStatus(418);
+  if (!reqUser) {
+    return res.sendStatus(418);
   }
+  await bcrypt.compare(password, reqUser.password, function (err, result) {
+    if (err) {
+      throw console.error(err);
+    }
+    if (result) {
+      req.session.authenticated = true;
+      req.session.user = {
+        username: reqUser.username,
+        firstName: reqUser.firstName,
+        lastName: reqUser.lastName,
+        email: reqUser.email,
+      };
+      res.json(req.session);
+    } else {
+      res.sendStatus(418);
+    }
+  });
 });
 
 // EDIT PROFILE
+app.put("/edit-profile", (req, res) => {
+  const userInDb = users.find((user) => user.username === "testing");
+  userInDb.email = req.body.email;
+  console.log(users);
+  res.json(users);
+});
 
 // CURRENT STATUS
 app.get("/current-user", (req, res) => {
