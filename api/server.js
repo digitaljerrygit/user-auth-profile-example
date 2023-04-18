@@ -19,8 +19,11 @@ app.use(
 
 let users = [
   {
-    username: "test",
-    password: "test",
+    username: "testing",
+    password: "testing",
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@gmail.com",
   },
 ];
 
@@ -35,8 +38,18 @@ app.post("/signup", async (req, res) => {
   users.push({
     username: req.body.username,
     password: password,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
   });
-  res.json(users);
+  req.session.authenticated = true;
+  req.session.user = {
+    username: req.body.username,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+  };
+  res.json(req.session.user);
 });
 
 // LOGIN

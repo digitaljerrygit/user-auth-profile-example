@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 
 import {
   TextField,
@@ -11,41 +12,36 @@ import {
   Typography,
 } from "@mui/material";
 
-const securityQuestions = [
-  "Where were you born?",
-  "What is your pet's name?",
-  "Where did your parents meet?",
-];
-
 export default function Signup() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const [authenticated, setAuthenticated] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const user = {
-      username: username,
-      password: password,
-    };
-
-    fetch("http://localhost:3001/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.authenticated) {
-          navigate("/dashboard");
-        }
-      });
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+      fetch("http://localhost:3001/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values, null, 2),
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res) {
+            navigate("/dashboard");
+          }
+        });
+    },
+  });
 
   useEffect(() => {
     fetch("http://localhost:3001/current-user", {
@@ -61,8 +57,12 @@ export default function Signup() {
       });
   }, []);
 
+  if (authenticated) {
+    navigate("/dashboard");
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <Stack
         spacing={2}
         alignItems="start"
@@ -71,51 +71,55 @@ export default function Signup() {
         sx={{ maxWidth: "sm" }}
         m={(0, "auto")}
       >
+        {/* USERNAME */}
         <Typography variant="h6">Signup Here</Typography>
         <TextField
           fullWidth
           type="text"
           label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          value={formik.values.username}
+          onChange={formik.handleChange}
         />
+        {/* FIRST NAME */}
         <Stack direction="row" spacing={2} width="100%">
           <TextField
             fullWidth
             type="text"
             label="First Name"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="firstName"
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
           />
+          {/* LAST NAME */}
           <TextField
             fullWidth
             type="text"
             label="Last Name"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="lastName"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
           />
         </Stack>
-        <TextField
-          fullWidth
-          type="tel"
-          label="Phone Number"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        {/* EMAIL */}
         <TextField
           fullWidth
           type="email"
           label="Email"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
         />
+        {/* PASSWORD */}
         <TextField
           fullWidth
           type="text"
           label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
         />
+        {/* SUBMIT */}
         <Button type="submit" fullWidth={true} variant="contained">
           Submit
         </Button>
