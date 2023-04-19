@@ -1,13 +1,18 @@
-require("dotenv").config();
-const express = require("express");
+import dotenv from "dotenv";
+dotenv.config();
+import express, { json, urlencoded } from "express";
 const app = express();
-const session = require("express-session");
-const bcrypt = require("bcrypt");
-const morgan = require("morgan");
-const users = require("./users");
+import session from "express-session";
+import { hash, compare } from "bcrypt";
+import morgan from "morgan";
+import { nanoid } from "nanoid";
+import users from "./users.js";
+
+// TODO: Implement editing feature
+
 app.use(morgan("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(
   session({
     secret: process.env.SECRET,
@@ -29,8 +34,9 @@ app.post("/signup", async (req, res) => {
   if (userInDb) {
     return res.sendStatus(404);
   }
-  const password = await bcrypt.hash(req.body.password, 10);
+  const password = await hash(req.body.password, 10);
   users.push({
+    public_id: nanoid(12),
     username: req.body.username,
     password: password,
     firstName: req.body.firstName,
@@ -55,7 +61,7 @@ app.post("/users", async (req, res) => {
   if (!reqUser) {
     return res.sendStatus(418);
   }
-  await bcrypt.compare(password, reqUser.password, function (err, result) {
+  await compare(password, reqUser.password, function (err, result) {
     if (err) {
       throw console.error(err);
     }

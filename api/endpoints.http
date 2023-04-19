@@ -10,7 +10,7 @@ Content-Type: application/json
   "password": "testing"
 }
 
-### PRIVATE PAGES
+### CURRENT STATUS
 GET http://localhost:3001/current-user
 
 ### LOGOUT 

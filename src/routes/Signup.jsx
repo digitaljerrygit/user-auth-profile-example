@@ -15,7 +15,7 @@ import {
 export default function Signup() {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
-
+  // TODO: implement validation
   const formik = useFormik({
     initialValues: {
       username: "",
