@@ -6,6 +6,7 @@ import ProfileCard from "../components/ProfileCard";
 
 export default function Dashboard() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [publicId, setPublicId] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -21,29 +22,30 @@ export default function Dashboard() {
     navigate("/login");
   };
 
-  useEffect(() => {
-    fetch("http://localhost:3001/current-user", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-        setAuthenticated(res.authenticated);
-        if (res.authenticated) {
-          setUsername(res.user.username);
-          setFirstName(res.user.firstName);
-          setLastName(res.user.lastName);
-          setEmail(res.user.email);
-        } else {
-          navigate("/login");
-        }
-      }),
-      [];
-  });
+  // useEffect(() => {
+  //   fetch("http://localhost:3001/current-user", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "include",
+  //   })
+  //     .then((res) => res.json())
+  //     .then((res) => {
+  //       console.log(res);
+  //       setAuthenticated(res.authenticated);
+  //       if (res.authenticated) {
+  //         setUsername(res.user.username);
+  //         setFirstName(res.user.firstName);
+  //         setLastName(res.user.lastName);
+  //         setEmail(res.user.email);
+  //         setPublicId(res.user.public_id);
+  //       } else {
+  //         navigate("/login");
+  //       }
+  //     }),
+  //     [];
+  // });
 
   if (!authenticated) {
     navigate("/login");
@@ -59,6 +61,7 @@ export default function Dashboard() {
         m={(0, "auto")}
       >
         <ProfileCard
+          publicId={publicId}
           username={username}
           firstName={firstName}
           lastName={lastName}

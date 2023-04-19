@@ -108,6 +108,11 @@ export default function Signup() {
       >
         {/* USERNAME */}
         <Typography variant="h6">Signup Here</Typography>
+        <Typography variant="body2">
+          Data entered will be stored in a MySQL database. However, I will not
+          be hoarding it. This is a real live registration form. Also anything
+          you didn't opt in to enter will not be stored.
+        </Typography>
         <TextField
           fullWidth
           type="text"

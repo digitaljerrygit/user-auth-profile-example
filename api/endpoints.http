@@ -28,10 +28,13 @@ Content-Type: application/json
   "email": "example_email@gmail.com"
 }
 
-### EDIT PROFILE 
-PUT http://localhost:3001/edit-profile
+### PARAMS 
+GET http://localhost:3001/edit/username/for/yuuWWObmMgJ-
+
+### EDIT EMAIL
+PUT http://localhost:3001/edit/email/for/yuuWWObmMgJ-
 Content-Type: application/json
 
 {
-  "email": "newemail@gmail.com"
+  "email": "new__email@gmail.com"
 }

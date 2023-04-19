@@ -8,8 +8,6 @@ import morgan from "morgan";
 import { nanoid } from "nanoid";
 import users from "./users.js";
 
-// TODO: Implement editing feature
-
 app.use(morgan("dev"));
 app.use(json());
 app.use(urlencoded({ extended: true }));
@@ -29,22 +27,25 @@ app.get("/users", (req, res) => {
 });
 
 // REGISTRATION
+// TODO: send the uniqid
 app.post("/signup", async (req, res) => {
   const userInDb = users.find((user) => user.username === req.body.username);
   if (userInDb) {
     return res.sendStatus(404);
   }
   const password = await hash(req.body.password, 10);
-  users.push({
+  const newUser = {
     public_id: nanoid(12),
     username: req.body.username,
     password: password,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
-  });
+  };
+  users.push(newUser);
   req.session.authenticated = true;
   req.session.user = {
+    public_id: newUser.public_id,
     username: req.body.username,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -68,6 +69,7 @@ app.post("/users", async (req, res) => {
     if (result) {
       req.session.authenticated = true;
       req.session.user = {
+        public_id: reqUser.public_id,
         username: reqUser.username,
         firstName: reqUser.firstName,
         lastName: reqUser.lastName,
@@ -86,6 +88,17 @@ app.put("/edit-profile", (req, res) => {
   userInDb.email = req.body.email;
   console.log(users);
   res.json(users);
+});
+
+app.put("/edit/:item/for/:public_id", (req, res) => {
+  const foundUser = users.findIndex(
+    (user) => user.public_id === req.params.public_id
+  );
+  const itemToChange = req.params.item;
+  const user = users[foundUser];
+  user[itemToChange] = req.body[itemToChange];
+  req.session.user[itemToChange] = req.body[itemToChange];
+  res.json(req.session);
 });
 
 // CURRENT STATUS
