@@ -10,12 +10,45 @@ import {
   Grid,
   Box,
   Typography,
+  InputAdornment,
+  Input,
+  IconButton,
 } from "@mui/material";
 
 export default function Signup() {
   const navigate = useNavigate();
   const [authenticated, setAuthenticated] = useState(false);
-  // TODO: implement validation
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.username) {
+      errors.username = "Required";
+    }
+
+    if (!values.firstName) {
+      errors.firstName = "Required";
+    }
+
+    if (!values.lastName) {
+      errors.lastName = "Required";
+    }
+
+    if (!values.email) {
+      errors.email = "Required";
+    }
+
+    if (!values.password) {
+      errors.password = "Required";
+    } else if (
+      !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,12}$/.test(values.password)
+    ) {
+      errors.password = true;
+    }
+
+    return errors;
+  };
+
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -24,6 +57,8 @@ export default function Signup() {
       email: "",
       password: "",
     },
+    validate,
+    validateOnChange: false,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       fetch("http://localhost:3001/signup", {
@@ -78,6 +113,8 @@ export default function Signup() {
           type="text"
           label="Username"
           name="username"
+          error={formik.errors.username}
+          helperText={formik.errors.username}
           value={formik.values.username}
           onChange={formik.handleChange}
         />
@@ -88,6 +125,8 @@ export default function Signup() {
             type="text"
             label="First Name"
             name="firstName"
+            error={formik.errors.firstName}
+            helperText={formik.errors.firstName}
             value={formik.values.firstName}
             onChange={formik.handleChange}
           />
@@ -97,6 +136,8 @@ export default function Signup() {
             type="text"
             label="Last Name"
             name="lastName"
+            error={formik.errors.lastName}
+            helperText={formik.errors.lastName}
             value={formik.values.lastName}
             onChange={formik.handleChange}
           />
@@ -107,18 +148,23 @@ export default function Signup() {
           type="email"
           label="Email"
           name="email"
+          error={formik.errors.email}
+          helperText={formik.errors.email}
           value={formik.values.email}
           onChange={formik.handleChange}
         />
         {/* PASSWORD */}
         <TextField
           fullWidth
-          type="text"
+          type="password"
           label="Password"
           name="password"
+          error={formik.errors.password}
+          helperText="Password should be 8 to 12 characters long and should contain at least one uppercase letter, one lowercase letter and one number"
           value={formik.values.password}
           onChange={formik.handleChange}
         />
+
         {/* SUBMIT */}
         <Button type="submit" fullWidth={true} variant="contained">
           Submit

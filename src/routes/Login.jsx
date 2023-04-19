@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
 
 import {
   TextField,
@@ -59,8 +60,48 @@ export default function Login() {
   //   navigate("/dashboard");
   // }
 
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.username) {
+      errors.username = "Required";
+    }
+
+    if (!values.password) {
+      errors.password = "Required";
+    }
+
+    return errors;
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validate,
+    validateOnChange: false,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+      fetch("http://localhost:3001/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+        credentials: "include",
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          if (res.authenticated) {
+            navigate("/dashboard");
+          }
+        });
+    },
+  });
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <Stack
         spacing={2}
         alignItems="start"
@@ -70,20 +111,34 @@ export default function Login() {
         m={(0, "auto")}
       >
         <Typography variant="h6">Login Here</Typography>
-        <Typography>Username: testing / Password: testing</Typography>
+        <Typography>
+          Username: <em>testing</em> / Password: <em>testing</em>
+        </Typography>
+        <Typography variant="body2">
+          Use the pre-configured account to test things out. You can also create
+          your own account. Data is stored in a MySQL server so it is
+          persistent. Or server memory. Either way I won't be saving (long
+          term). This is real authentication. No logging
+        </Typography>
         <TextField
           fullWidth
           type="text"
           label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          error={formik.errors.username}
+          helperText={formik.errors.username}
+          value={formik.values.username}
+          onChange={formik.handleChange}
         />
         <TextField
           fullWidth
-          type="text"
+          type="password"
           label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          error={formik.errors.password}
+          helperText={formik.errors.password}
+          value={formik.values.password}
+          onChange={formik.handleChange}
         />
         <Button type="submit" fullWidth={true} variant="contained">
           Submit
