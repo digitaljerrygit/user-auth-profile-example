@@ -60,7 +60,6 @@ export default function Signup() {
     validate,
     validateOnChange: false,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       fetch("http://localhost:3001/signup", {
         method: "POST",
         headers: {

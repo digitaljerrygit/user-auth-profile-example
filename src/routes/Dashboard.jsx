@@ -22,31 +22,6 @@ export default function Dashboard() {
     navigate("/login");
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/current-user", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     credentials: "include",
-  //   })
-  //     .then((res) => res.json())
-  //     .then((res) => {
-  //       console.log(res);
-  //       setAuthenticated(res.authenticated);
-  //       if (res.authenticated) {
-  //         setUsername(res.user.username);
-  //         setFirstName(res.user.firstName);
-  //         setLastName(res.user.lastName);
-  //         setEmail(res.user.email);
-  //         setPublicId(res.user.public_id);
-  //       } else {
-  //         navigate("/login");
-  //       }
-  //     }),
-  //     [];
-  // });
-
   if (!authenticated) {
     navigate("/login");
   }

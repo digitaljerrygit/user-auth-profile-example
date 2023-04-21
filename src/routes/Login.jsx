@@ -56,9 +56,9 @@ export default function Login() {
       });
   }, []);
 
-  // if (authenticated) {
-  //   navigate("/dashboard");
-  // }
+  if (authenticated) {
+    navigate("/dashboard");
+  }
 
   const validate = (values) => {
     const errors = {};
@@ -82,7 +82,6 @@ export default function Login() {
     validate,
     validateOnChange: false,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       fetch("http://localhost:3001/users", {
         method: "POST",
         headers: {

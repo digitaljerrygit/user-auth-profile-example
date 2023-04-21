@@ -1,15 +1,3 @@
-### GET ALL USERS 
-GET http://localhost:3001/users
-
-### LOGIN
-POST http://localhost:3001/users
-Content-Type: application/json
-
-{
-  "username": "testing",
-  "password": "testing"
-}
-
 ### CURRENT STATUS
 GET http://localhost:3001/current-user
 
@@ -21,20 +9,34 @@ POST http://localhost:3001/signup
 Content-Type: application/json
 
 {
-  "username": "example_user",
-  "password": "testing",
-  "firstName": "Charlie",
-  "lastName": "Bravo",
-  "email": "example_email@gmail.com"
+  "username": "test",
+  "password": "test",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "example_email_for_test@gmail.com"
 }
 
-### PARAMS 
-GET http://localhost:3001/edit/username/for/yuuWWObmMgJ-
-
-### EDIT EMAIL
-PUT http://localhost:3001/edit/email/for/yuuWWObmMgJ-
+### LOGIN
+POST http://localhost:3001/users
 Content-Type: application/json
 
 {
-  "email": "new__email@gmail.com"
+  "username": "test",
+  "password": "test"
+}
+
+### EDIT EMAIL
+PUT http://localhost:3001/edit/email/for/qj8cRlg5BN_t
+Content-Type: application/json
+
+{
+  "newValue": "new_email@gmail.com"
+}
+
+### EDIT USERNAME
+PUT http://localhost:3001/edit/username/for/qj8cRlg5BN_t
+Content-Type: application/json
+
+{
+  "newValue": "sfeesssffnge"
 }

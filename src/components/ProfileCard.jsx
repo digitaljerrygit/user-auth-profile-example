@@ -66,7 +66,6 @@ export default function ProfileCard({
       email: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       setEditing({
         username: false,
         name: false,
@@ -84,19 +83,30 @@ export default function ProfileCard({
             },
             credentials: "include",
             body: JSON.stringify({
-              [key]: value,
+              newValue: value,
             }),
           })
-            .then((res) => res.json())
-            .then((res) => {
-              console.log(res);
-              setUsername(res.user.username);
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else if (response.status === 400) {
+                alert(`Sorry the ${key} is taken`);
+                console.error("Bad Request");
+              } else {
+                alert(`Sorry the ${key} is taken`);
+                console.error("Error");
+              }
+            })
+            .then((response) => {
+              setUsername(response.user.username);
+              setEmail(response.user.email);
+            })
+            .catch((error) => {
+              console.error(error);
             });
         }
       }
       formik.values.username = "";
-      // formik.values.firstName = "";
-      // formik.values.lastName = "";
       formik.values.email = "";
     },
   });
