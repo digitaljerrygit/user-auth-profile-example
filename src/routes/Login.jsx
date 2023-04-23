@@ -19,7 +19,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("/api-prod/current-user", {
+    fetch("/api/current-user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export default function Login() {
     validate,
     validateOnChange: false,
     onSubmit: (values) => {
-      fetch("/api-prod/users", {
+      fetch("/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
