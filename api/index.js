@@ -168,7 +168,7 @@ app.put("/edit/:item/for/:public_id", (req, res) => {
 });
 
 // CURRENT STATUS
-app.get("/api/current-user", (req, res) => {
+app.get("/current-user", (req, res) => {
   res.json(req.session);
 });
 
@@ -180,9 +180,12 @@ app.get("/logout", (req, res) => {
   });
 });
 
-app.get("/api", (req, res) => {
+vercelRoutes.get("/api", (req, res) => {
   res.send("workign");
 });
+
+const vercelRoutes = express.Router();
+app.use("/api", vercelRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
