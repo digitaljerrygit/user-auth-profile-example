@@ -60,7 +60,7 @@ export default function Signup() {
     validate,
     validateOnChange: false,
     onSubmit: (values) => {
-      fetch("/api/signup", {
+      fetch("/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +78,7 @@ export default function Signup() {
   });
 
   useEffect(() => {
-    fetch("/api/current-user", {
+    fetch("/current-user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
