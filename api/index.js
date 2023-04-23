@@ -169,7 +169,7 @@ app.put("/edit/:item/for/:public_id", (req, res) => {
 });
 
 // CURRENT STATUS
-app.get("/api", (req, res) => {
+app.get("/current-user", (req, res) => {
   res.json(req.session);
 });
 
@@ -186,4 +186,4 @@ app.listen(PORT, () => {
   console.log(`App listening on http://localhost:${PORT}`);
 });
 
-export default app;
+module.exports = app;
