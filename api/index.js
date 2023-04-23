@@ -180,9 +180,13 @@ app.get("/logout", (req, res) => {
   });
 });
 
+app.get("/api", (req, res) => {
+  res.send("workign");
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`App listening on http://localhost:${PORT}`);
 });
 
-module.exports = app;
+export default app;
