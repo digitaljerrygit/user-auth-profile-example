@@ -185,3 +185,5 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`App listening on http://localhost:${PORT}`);
 });
+
+module.exports = app;
