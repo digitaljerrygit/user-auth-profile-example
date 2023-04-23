@@ -180,7 +180,7 @@ app.get("/logout", (req, res) => {
   });
 });
 
-vercelRoutes.get("/api", (req, res) => {
+vercelRoutes.get("/working", (req, res) => {
   res.send("workign");
 });
 
