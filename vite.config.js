@@ -11,7 +11,7 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
-      "/prod-api": {
+      "/api-prod": {
         target: "https://example.com",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/prod-api/, ""),
