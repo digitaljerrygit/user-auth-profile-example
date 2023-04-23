@@ -58,6 +58,10 @@ const theme = createTheme({
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Login />,
+  },
+  {
     path: "/login",
     element: <Login />,
   },

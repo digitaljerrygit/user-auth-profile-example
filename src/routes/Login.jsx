@@ -18,32 +18,8 @@ export default function Login() {
   const [authenticated, setAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const user = {
-      username: username,
-      password: password,
-    };
-
-    fetch("http://localhost:3001/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.authenticated) {
-          navigate("/dashboard");
-        }
-      });
-  };
-
   useEffect(() => {
-    fetch("http://localhost:3001/current-user", {
+    fetch("/api-prod/current-user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +58,7 @@ export default function Login() {
     validate,
     validateOnChange: false,
     onSubmit: (values) => {
-      fetch("http://localhost:3001/users", {
+      fetch("/api-prod/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

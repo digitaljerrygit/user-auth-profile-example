@@ -14,7 +14,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    fetch("http://localhost:3001/logout", {
+    fetch("/api-prod/logout", {
       method: "GET",
       credentials: "include",
     });

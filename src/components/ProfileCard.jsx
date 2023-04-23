@@ -34,7 +34,7 @@ export default function ProfileCard({
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:3001/current-user", {
+    fetch("/api/current-user", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export default function ProfileCard({
       for (const [key, value] of entries) {
         if (value.length > 0) {
           console.log(key);
-          fetch(`http://localhost:3001/edit/${key}/for/${publicId}`, {
+          fetch(`/api/edit/${key}/for/${publicId}`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
