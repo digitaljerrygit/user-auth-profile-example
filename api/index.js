@@ -180,13 +180,6 @@ app.get("/logout", (req, res) => {
   });
 });
 
-vercelRoutes.get("/working", (req, res) => {
-  res.send("workign");
-});
-
-const vercelRoutes = express.Router();
-app.use("/api", vercelRoutes);
-
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`App listening on http://localhost:${PORT}`);
