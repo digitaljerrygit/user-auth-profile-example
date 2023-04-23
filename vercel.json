@@ -1,0 +1,8 @@
+{
+  "routes": [
+    {
+      "src": "/api-prod/(.*)",
+      "dest": "user-auth-profile-example.vercel.app"
+    }
+  ]
+}
