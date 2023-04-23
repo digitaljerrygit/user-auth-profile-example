@@ -12,7 +12,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
       "/api-prod": {
-        target: "https://example.com",
+        target: "user-auth-profile-example.vercel.app",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/prod-api/, ""),
       },
