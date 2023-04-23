@@ -5,7 +5,6 @@ const app = express();
 import session from "express-session";
 import morgan from "morgan";
 import { nanoid } from "nanoid";
-import users from "./users.js";
 import mysql from "mysql2";
 import bcrypt from "bcrypt";
 import cors from "cors";
