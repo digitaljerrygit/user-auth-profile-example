@@ -169,7 +169,7 @@ app.put("/edit/:item/for/:public_id", (req, res) => {
 });
 
 // CURRENT STATUS
-app.get("/current-user", (req, res) => {
+app.get("/api/current-user", (req, res) => {
   res.json(req.session);
 });
 
