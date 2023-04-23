@@ -8,7 +8,9 @@ import { nanoid } from "nanoid";
 import users from "./users.js";
 import mysql from "mysql2";
 import bcrypt from "bcrypt";
+import cors from "cors";
 
+app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(morgan("dev"));
