@@ -1,8 +1,14 @@
 {
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@vercel/node"
+    }
+  ],
   "routes": [
     {
-      "src": "/api-prod/(.*)",
-      "dest": "user-auth-profile-example.vercel.app"
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
